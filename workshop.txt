@@ -1,0 +1,155 @@
+from bs4 import BeautifulSoup
+import requests
+
+
+lat_and_long_dict = {}
+
+
+url =  'https://www.wunderground.com/weather/us/me/portland'
+req = requests.get(url)
+page = req.text
+soup = BeautifulSoup(page, 'html.parser')
+
+
+# print (soup.prettify())
+
+
+tag_finder = soup.find('span',class_='subheading')
+
+
+print(tag_finder.text.split())
+
+
+span = tag_finder.text.split()
+# def get_coords(city,state):
+
+
+
+
+# for result in tag_finder:
+#     print(result.text)
+
+
+
+
+for index in span:
+   print(index)
+
+
+
+
+lat_and_long_dict['lat'] = span[3]
+lat_and_long_dict['long'] = f'-{span[5]}'
+
+
+print(lat_and_long_dict)
+# ticker = 'IXIC'
+# url = f'https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ?authuser=1'
+
+
+# req = requests.get(url)
+# page = req.text
+
+
+# web = BeautifulSoup(page, 'html.parser')
+# print(web)
+# spans = web.find('div', class_='YMlKec fxKbKc')
+# print(spans.text)
+# for span in spans:
+#   print(span.text)
+
+
+
+
+speech = "Hello, this is a test."
+
+engine.say(speech)
+engine.runAndWait()
+
+engine.save_to_file(speech, 'output.wav')
+engine.runAndWait()
+
+
+
+
+def process_weather_request() :
+    print('processing weather request')
+
+def process_sports_request() :
+    print('processing sports request')
+
+def process_music_request() :
+    print('processing music request')
+
+def process_current_event_request() :
+    print('processing current event request')
+#
+#  This is the main driver program for the "Alexa" Project
+#
+categories = ['WEATHER','SPORTS','MUSIC','CURRENT EVENTS','EXIT']
+user_category = ''
+print("Welcome to Alexa")
+while user_category != 'EXIT' :
+    print('Please select one of the following categories for your question')
+    print('\n''WEATHER\nSPORTS\nMUSIC\nCURRENT EVENTS\nEXIT\n')
+    user_category = input('What is your choice : ').upper()
+    #print(user_category)
+
+    if user_category in categories :
+        if user_category == 'WEATHER' :
+            process_weather_request()
+        elif user_category == 'SPORTS' :
+            process_sports_request()
+        elif user_category == 'MUSIC' :
+            process_music_request()
+        elif user_category == 'CURRENT EVENTS' :
+            process_current_event_request()
+        else :
+            exit(0)
+    else :
+        print('Sorry, your response does not match any of the categories')
+
+
+        # process = subprocess.run(['curl', 'ipinfo.io'], capture_output=True, text=True)
+# data_loc_str = process.stdout
+# data_loc_dict = eval(data_loc_str)
+# print('City = ',data_loc_dict['city'])
+# print('Region = ', data_loc_dict['region'])
+
+# lat_and_long_dict = {}
+
+# url =  'https://www.wunderground.com/weather/us/me/portland'
+# req = requests.get(url)
+# page = req.text
+# soup = BeautifulSoup(page, 'html.parser')
+
+# # print (soup.prettify())
+
+# tag_finder = soup.find('span',class_='subheading')
+
+# span = tag_finder.text.split()
+
+# print(span)
+
+# if span[4] == '°N,':
+#     lat_and_long_dict['lat'] = span[3]
+# if span[4] == '°S,':
+#     lat_and_long_dict['lat'] = f'-{span[3]}'
+# if span[6] == '°E':
+#     lat_and_long_dict['long'] = span[5]
+# if span[6] == '°W':
+#     lat_and_long_dict['long'] = f'-{span[5]}'
+
+# print(lat_and_long_dict)
+
+
+
+
+# search_term = 'Dinosuars'
+# url = "https://www.google.com.tr//search?q={}".format(search_term)
+# webbrowser.open(url)
+# link = "https://en.wikipedia.org/wiki/Dinosaur"
+# r = requests.get(link)
+# soup = BeautifulSoup(r.text, 'html.parser')
+# webpage_text = soup.find_all('p')[1].get_text()
+# print(webpage_text[0:1000])
