@@ -5,6 +5,8 @@ import webbrowser
 import subprocess
 import voice
 
+name = input("Enter player name: ")
+print(name)
 
 def voice(text,voice_id):
         engine = pyttsx3.init()
@@ -23,7 +25,7 @@ def voice(text,voice_id):
         engine.runAndWait()
         return
 
-input = 'eliud kipchoge'
+input = name
 
 if ' ' in input:
                 first_last = input.replace(' ','_')
