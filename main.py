@@ -31,6 +31,22 @@ def process_weather_request() :
 
 def process_sports_request() :
     print('processing sports request')
+    sports = ['BASKETBALL','FOOTBALL','SOCCER','BASEBALL']
+    sport_catagory = ''
+    while sport_catagory != 'EXIT':
+        voice('Select a sport or say exit to return to home',34)
+        sport_catagory = input('What is your choice: ').upper()
+        if sport_catagory in sports:
+              if sport_catagory == 'BASKETBALL':
+                    print('basketball')
+              elif sport_catagory == 'FOOTBALL':
+                    print('football')
+              elif sport_catagory == 'SOCCER':
+                    print('soccer')
+              elif sport_catagory == 'BASEBALL':
+                    print('baseball')
+        else:
+              voice('Sorry, unable to proccess that sport. Try another sport or say exit to return to home',34)
 
 def process_music_request() :
     print('processing music request')
