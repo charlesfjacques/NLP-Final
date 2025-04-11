@@ -34,9 +34,8 @@ def get_song_name_artist(query):
 
     return(song_title, artist_title)
 
-def check_title(song_title):
+def check_title(song_title, spotify_title):
     #search through spotify if the song exists, take that title (add later)
-    spotify_title = "Back In The U.S.S.R - Remastered 2009"
 
     alpha_song_list = []
     #this section seees if all the words in the song query all purely alphabetical
@@ -76,9 +75,8 @@ def check_title(song_title):
             start +=1
     return valid
 
-def check_artist(artist_title):
+def check_artist(artist_title, spotify_artists):
     #get artists from same spotify track - list of strings
-    spotify_artists = ["Beach Boys", "The Beatles"]
     
     running = True
     valid = None
