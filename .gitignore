@@ -11,3 +11,5 @@ music/__pycache__/spotify_utils.cpython-313.pyc
 music/__pycache__/validification.cpython-313.pyc
 sports/__pycache__/sports.cpython-313.pyc
 weather/__pycache__/weather.cpython-313.pyc
+*.pyc
+output.wav
