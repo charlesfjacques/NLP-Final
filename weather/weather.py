@@ -1,13 +1,7 @@
-def process_weather_request() :
-    print('processing weather request')
-
-
 from bs4 import BeautifulSoup as soup
 import requests
 
 # Transfer Inputs
-
-
 states = {
     "al": "Alabama",
     "ak": "Alaska",
@@ -82,17 +76,7 @@ def city_fix(input):
     else:
         return input.lower()
 
-
-
-
-
-
-
-
 # Get coordinates for API
-import requests
-import json
-
 def get_coords(city, state):
     url = f'https://www.wunderground.com/weather/us/{state}/{city.lower()}'
 
@@ -115,16 +99,10 @@ def get_coords(city, state):
             lon = lon * (-1)
         elif "°E" in item:
             lon = float(name[5])
-    # print(lat)
-    # print(long)
-
-   
-    return lat, long
+    return lat, lon
 
 
 # API dictionary return
-
-
 def get_weather_coords(lat, lon, api_key):
     url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
     response = requests.get(url)
@@ -142,16 +120,22 @@ def get_weather_coords(lat, lon, api_key):
 
 
 # Conmbines all functions above
-
 def get_weather(city,state):
-    my_key = "cb89c37822875b5b47319c98f6cb1522"
+    # TODO: put this somewhere else so we're not just sharing our API key with the world
+    API_KEY = "cb89c37822875b5b47319c98f6cb1522"
     city = city_fix(city)
     state = state_abbrev(state)
     lat, lon = get_coords(city, state)
-    return get_weather_coords(lat, lon, my_key)
+    return get_weather_coords(lat, lon, API_KEY)
 
 
 # Practice
 print(get_weather("Chicago", "Illinois"))
 
+
+
+# This is the function used by the driver, and the only
+# public function of this module
+def process_weather_request() :
+    print('processing weather request')
 
