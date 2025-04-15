@@ -90,15 +90,17 @@ def process_sports_request() :
 
           if check_exit(answer):
                return
-            
+          
           if answer == 'ATHLETE':
                voice("state the name of the athlete",34)
                name = input('athlete name: ')
                player(name)
+
           elif answer == 'SPORT':
                voice('state the sport you would like to investigate',34)
                sport_name = input('state sport: ').upper()
                sport_spliter(sport_name)
+               
           else:
                voice('sorry could not process your request',34)
                exit
