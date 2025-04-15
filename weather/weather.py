@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup as soup
 import requests
 
+from parser import parse_string
+
 # Transfer Inputs
 states = {
     "al": "Alabama",
@@ -133,6 +135,14 @@ def get_weather(city,state):
 print(get_weather("Chicago", "Illinois"))
 
 
+def parse_request(request):
+    err, ast = parse_string(request)
+    if err:
+        error(err)
+    else:
+        print(ast)
+def error(err):
+    pass
 
 # This is the function used by the driver, and the only
 # public function of this module
