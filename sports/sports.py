@@ -4,182 +4,103 @@ from pyttsx3_voice import voice
 import webbrowser
 import subprocess
 
-def player(input):
+
+def check_exit(string):
+     if 'EXIT' in string.upper():
+        voice('Returning to home', 34)
+        return True
+     return False
+
+
+def player(name):
+     if ' ' in name:
+          first_last = name.replace(' ','_')
+     else:
+          first_last = name
+
+     letter_list = []
  
-
-      if ' ' in input:
+     for letters in name:
+          letter_list.append(letters)
  
-
-           first_last = input.replace(' ','_')
+     checker = letter_list[0]
+     # print(checker)
  
-
-      else:
+     print(f"Formatted name for URL: {first_last}")
  
-
-           first_last = input
+     search_term = f'{input}'
  
-
-
+     url = "https://www.google.com.tr//search?q={}".format(search_term)
  
-
-      letter_list = []
+     webbrowser.open(url)
  
-
-      for letters in input:
+     link = "https://en.wikipedia.org/wiki/{}".format(first_last)
  
-
-           letter_list.append(letters)
+     print(f"Fetching URL: {link}")
  
-
-
+     r = requests.get(link)
  
-
-      checker = letter_list[0]
+     soup = BeautifulSoup(r.text, 'html.parser')
  
-
-      print(checker)
+     try:
  
+          i = 1
 
-
+          webpage_text = soup.find_all('p')[i].get_text()
  
-
-      print(f"Formatted name for URL: {first_last}")
+          if webpage_text[0] != checker:
+               webpage_text = soup.find_all('p')[i+1].get_text()
  
-
-
+          print(webpage_text[0:1000])
  
-
-
+          speech = webpage_text[0:100]
+     except:
+          speech = "Player not found"
  
+     voice(speech,34)
 
-      search_term = f'{input}'
- 
+def sport_spliter(sport_name):
 
-      url = "https://www.google.com.tr//search?q={}".format(search_term)
- 
+     sports = ['BASKETBALL','FOOTBALL','SOCCER','BASEBALL','EXIT']
+     voice('Select a sport, state an athletes name, or say exit to return to home',34)
 
-      webbrowser.open(url)
- 
+     if sport_name in sports:
+          if sport_name == 'BASKETBALL':
+               print('basketball')
+          elif sport_name == 'FOOTBALL':
+               print('football')
+          elif sport_name == 'SOCCER':
+               print('soccer')
+          elif sport_name == 'BASEBALL':
+               print('baseball')
+          elif sport_name == 'EXIT':
+               voice('Returning to home',34)
+     else:
+          voice('Sorry, unable to proccess that sport. Try another sport or say exit to return to home',34)
+          exit
 
-
- 
-
-      link = "https://en.wikipedia.org/wiki/{}".format(first_last)
- 
-
-      print(f"Fetching URL: {link}")
- 
-
-
- 
-
-      r = requests.get(link)
- 
-
-      soup = BeautifulSoup(r.text, 'html.parser')
- 
-
-
- 
-
-      try:
- 
-
-            i = 1
- 
-
-            webpage_text = soup.find_all('p')[i].get_text()
- 
-
-
- 
-
-            if webpage_text[0] != checker:
- 
-
-                webpage_text = soup.find_all('p')[i+1].get_text()
- 
-
-
- 
-
-            print(webpage_text[0:1000])
- 
-
-            speech = webpage_text[0:100]
- 
-
-      except:
- 
-
-            speech = "Player not found"
- 
-
-
- 
-
-      voice(speech,34)
 
 def process_sports_request() :
-    print('processing sports request')
-    sports = ['BASKETBALL','FOOTBALL','SOCCER','BASEBALL']
-    sport_catagory = ''
-    while sport_catagory != 'EXIT':
-        voice('Select a sport or say exit to return to home',34)
-        sport_catagory = input('What is your choice: ').upper()
-        if sport_catagory in sports:
-              if sport_catagory == 'BASKETBALL':
-                    print('basketball')
-              elif sport_catagory == 'FOOTBALL':
-                    print('football')
-              elif sport_catagory == 'SOCCER':
-                    print('soccer')
-              elif sport_catagory == 'BASEBALL':
-                    print('baseball')
-        else:
-              voice('Sorry, unable to proccess that sport. Try another sport or say exit to return to home',34)
+     print('processing sports request')
 
-    name = input("Enter player name: ")
-    print(name)
+      
+     while True:
+          voice('If you would like to learn about an atlhete say athlete, if you would like to learn about a sport say sport, if you would like to reutrn home say exit',34)
+          answer = input('Choice:' ).upper
 
-    input = name
+          if check_exit(answer):
+               return
+            
+          if answer == 'ATHLETE':
+               voice("state the name of the athlete",34)
+               name = input('athlete name: ')
+               player(name)
+          elif answer == 'SPORT':
+               voice('state the sport you would like to investigate',34)
+               sport_name = input('state sport: ').upper()
+               sport_spliter(sport_name)
+          else:
+               voice('sorry could not process your request',34)
+               exit
 
-    if ' ' in input:
-                    first_last = input.replace(' ','_')
-    else:
-            first_last = input
-
-    letter_list = []
-    for letters in input:
-            letter_list.append(letters)
-
-    checker = letter_list[0]
-    print(checker)
-
-    print(f"Formatted name for URL: {first_last}")
-
-
-    search_term = f'{input}'
-    url = "https://www.google.com.tr//search?q={}".format(search_term)
-    webbrowser.open(url)
-
-    link = "https://en.wikipedia.org/wiki/{}".format(first_last)
-    print(f"Fetching URL: {link}")
-
-    r = requests.get(link)
-    soup = BeautifulSoup(r.text, 'html.parser')
-
-    try:
-            i = 1
-            webpage_text = soup.find_all('p')[i].get_text()
-
-            if webpage_text[0] != checker:
-                    webpage_text = soup.find_all('p')[i+1].get_text()
-
-            print(webpage_text[0:1000])
-            speech = webpage_text[0:100]
-    except:
-        speech = "Player not found"
-
-    voice(speech,34)
 
