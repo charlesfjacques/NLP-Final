@@ -14,5 +14,7 @@ weather/__pycache__/weather.cpython-313.pyc
 output.wav
 __pycache__/voice.cpython-313.pyc
 .cache
-
 __pycache__/voice.cpython-313.pyc
+output.wav
+__pycache__/voice.cpython-313.pyc
+.DS_Store
