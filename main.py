@@ -1,8 +1,9 @@
 from pyttsx3_voice import voice
 from sports.sports import process_sports_request
-from weather.weather import process_weather_request
-from music.music import process_music_request
-from current_events.current_events import process_current_event_request
+# from weather.weather import process_weather_request
+# import weather.parser
+# from music.music import process_music_request
+# from current_events.current_events import process_current_event_request
 
 
 #
@@ -20,13 +21,16 @@ def main():
 
         if user_category in categories :
             if user_category == 'WEATHER' :
-                process_weather_request()
+                # process_weather_request()
+                continue
             elif user_category == 'SPORTS' :
                 process_sports_request()
             elif user_category == 'MUSIC' :
-                process_music_request()
+                # process_music_request()
+                continue
             elif user_category == 'CURRENT EVENTS' :
-                process_current_event_request()
+                # process_current_event_request()
+                continue
             else :
                 exit(0)
         else :
