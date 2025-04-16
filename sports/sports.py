@@ -24,7 +24,7 @@ def player(name):
           letter_list.append(letters)
  
      checker = letter_list[0]
-     # print(checker)
+     print(checker)
  
      print(f"Formatted name for URL: {first_last}")
  
@@ -44,12 +44,14 @@ def player(name):
  
      try:
  
-          i = 1
+          i = 0
 
           webpage_text = soup.find_all('p')[i].get_text()
  
           if webpage_text[0] != checker:
+               print(True)
                webpage_text = soup.find_all('p')[i+1].get_text()
+
  
           print(webpage_text[0:1000])
  
@@ -85,8 +87,8 @@ def process_sports_request() :
 
       
      while True:
-          voice('If you would like to learn about an atlhete say athlete, if you would like to learn about a sport say sport, if you would like to reutrn home say exit',34)
-          answer = input('Choice:' ).upper
+          voice('If you would like to learn about an atlhete say athlete, if you would like to learn about a sport say sport, if you would like to exit say exit',34)
+          answer = input('Choice:' ).upper()
 
           if check_exit(answer):
                return
