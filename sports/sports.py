@@ -32,7 +32,6 @@ def player(name):
  
      url = "https://www.google.com.tr//search?q={}".format(search_term)
  
-     webbrowser.open(url)
  
      link = "https://en.wikipedia.org/wiki/{}".format(first_last)
  
@@ -55,11 +54,12 @@ def player(name):
  
           print(webpage_text[0:1000])
  
-          speech = webpage_text[0:100]
+          speech = webpage_text[0:1000]
      except:
           speech = "Player not found"
  
      voice(speech,34)
+
 
 def sport_spliter(sport_name):
 
