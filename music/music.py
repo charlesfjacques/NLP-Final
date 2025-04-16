@@ -12,7 +12,7 @@ def process_music_request():
     print('Processing music request')
 
     while True:
-        voice('What do you want to listen to?', 34)
+        voice('What would you like to do?   Play a song or stop? use PLAY.. BY... and STOP...'   , 34)
         user_query = input('Query? ').strip()
 
         if check_exit(user_query):
@@ -43,4 +43,4 @@ def process_music_request():
 
         voice(f'Playing {spotify_song_name} by {spotify_artists[0]}', 34)
         play_song(sp, track['uri'])
-        return
+        
