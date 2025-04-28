@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup as soup
 import requests
 
-from parser import parse_string
-
 # Transfer Inputs
 states = {
     "al": "Alabama",
@@ -130,22 +128,80 @@ def get_weather(city,state):
     lat, lon = get_coords(city, state)
     return get_weather_coords(lat, lon, API_KEY)
 
+# Maps conditions a user might request to the keys we use in the output from get_weather_coords
+ALL_CONDITIONS = {
+    "temperature": "temp",
+    "feels": "feels like",
+    "high": "high",
+    "low": "low",
+    "wind": "wind speed",
+    "weather": "condition",
+    "condition": "condition",
+    "humidity": "humidity"
+}
 
-# Practice
-print(get_weather("Chicago", "Illinois"))
-
-
-def parse_request(request):
-    err, ast = parse_string(request)
-    if err:
-        error(err)
+def find_in_list(item, list):
+    if item in list:
+        return list.index(item)
     else:
-        print(ast)
-def error(err):
-    pass
+        return None
+def parse_request(request: str):
+    import re
+    # Lowercase, split into words, then strip non-alphabet characters (like commas and stuff)
+    tokens = [re.sub(r"[^a-z]", "", word) for word in request.lower().split()]
+    if "exit" in tokens:
+        return error("exit")
+
+    state = None
+    state_tok = -1
+    for state_abbrv, state_full in states.items():
+        idx = find_in_list(state_abbrv.lower(), tokens)
+        if idx is None:
+            idx = find_in_list(state_full.lower(), tokens)
+        if idx is not None:
+            state = state_abbrv
+            state_tok = idx
+    if state is None:
+        return error("Please specify a state")
+    if state_tok == 0:
+        return error("Please specify a city before the state")
+    
+    # Just assume the city is right before the state
+    city = tokens[state_tok-1]
+
+    # requested_cond holds the actual word the user input, not the key we'll use
+    # e.g. If the user writes "temperature", requested_cond="temperature" but
+    # we'll look for data["temp"]
+    requested_cond = None
+    for condition in ALL_CONDITIONS.keys():
+        idx = find_in_list(condition.lower(), tokens)
+        if idx is not None:
+            requested_cond = condition
+            break
+    if requested_cond is None:
+        return error("Please specify a weather condition")
+
+    data = get_weather(city, state)[ALL_CONDITIONS[requested_cond]]
+    # TODO: This sentence format won't always make sense grammatically, so we should be smarter about it
+    print(f"The {requested_cond} in {city.capitalize()}, {state.capitalize()} is {data}")
+    return None
+
+
+def error(message):
+    return message
 
 # This is the function used by the driver, and the only
 # public function of this module
-def process_weather_request() :
-    print('processing weather request')
+# TODO: Handle errors properly and request user input properly
+#       and also output things using text-to-speech
+def process_weather_request():
+    while True:
+        print("What weather information would you like?")
+        err = parse_request(input())
+        while err is not None:
+            if err == "exit":
+                return
+            # TODO: Actually handle errors
+            print(err)
+            err = parse_request(input())
 
