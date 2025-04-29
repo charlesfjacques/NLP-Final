@@ -132,6 +132,11 @@ def get_weather(city, state):
     lat, lon = get_coords(city, state)
     return get_weather_coords(lat, lon, API_KEY)
 
+
+# For the terminal: 
+# export WEATHER_API_KEY="cb89c37822875b5b47319c98f6cb1522"
+
+
 # Maps conditions a user might request to the keys we use in the output from get_weather_coords
 ALL_CONDITIONS = {
     "temperature": "temp",
@@ -192,9 +197,13 @@ def parse_request(request: str):
 
 
 def error(message):
-    return message
+    if message.lower() == "exit":
+        return "exit"
+    else:
+        print(f"Error: {message}")
+        return None
 
-# This is the function used by the driver, and the only
+i# This is the function used by the driver, and the only
 # public function of this module
 # TODO: Handle errors properly and request user input properly
 #       and also output things using text-to-speech
