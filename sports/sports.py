@@ -3,63 +3,13 @@ import requests
 from pyttsx3_voice import voice
 import webbrowser
 import subprocess
-
+from sports.player import player
 
 def check_exit(string):
      if 'EXIT' in string.upper():
         voice('Returning to home', 34)
         return True
      return False
-
-
-def player(name):
-     if ' ' in name:
-          first_last = name.replace(' ','_')
-     else:
-          first_last = name
-
-     letter_list = []
- 
-     for letters in name:
-          letter_list.append(letters)
- 
-     checker = letter_list[0]
-     print(checker)
- 
-     print(f"Formatted name for URL: {first_last}")
- 
-     search_term = f'{input}'
- 
-     url = "https://www.google.com.tr//search?q={}".format(search_term)
- 
- 
-     link = "https://en.wikipedia.org/wiki/{}".format(first_last)
- 
-     print(f"Fetching URL: {link}")
- 
-     r = requests.get(link)
- 
-     soup = BeautifulSoup(r.text, 'html.parser')
- 
-     try:
- 
-          i = 0
-
-          webpage_text = soup.find_all('p')[i].get_text()
- 
-          if webpage_text[0] != checker:
-               print(True)
-               webpage_text = soup.find_all('p')[i+1].get_text()
-
- 
-          print(webpage_text[0:1000])
- 
-          speech = webpage_text[0:1000]
-     except:
-          speech = "Player not found"
- 
-     voice(speech,34)
-
 
 def sport_spliter(sport_name):
 
@@ -96,6 +46,7 @@ def process_sports_request() :
           if answer == 'ATHLETE':
                voice("state the name of the athlete",34)
                name = input('athlete name: ')
+               print(name)
                player(name)
 
           elif answer == 'SPORT':
