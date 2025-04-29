@@ -120,8 +120,6 @@ def get_weather_coords(lat, lon, api_key):
 
 
 # Conmbines all functions above
-def get_weather(city,state):
-    # TODO: put this somewhere else so we're not just sharing our API key with the world
 import os
 
 def get_weather(city, state):
