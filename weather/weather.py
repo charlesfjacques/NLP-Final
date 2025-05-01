@@ -153,12 +153,12 @@ def find_in_list(item, list):
         return list.index(item)
     else:
         return None
-def parse_request(request: str):
+def parse_request(request):
     import re
     # Lowercase, split into words, then strip non-alphabet characters (like commas and stuff)
     tokens = [re.sub(r"[^a-z]", "", word) for word in request.lower().split()]
     if "exit" in tokens:
-        return error("exit")
+        return True 
 
     state = None
     state_tok = -1
@@ -192,28 +192,18 @@ def parse_request(request: str):
     data = get_weather(city, state)[ALL_CONDITIONS[requested_cond]]
     # TODO: This sentence format won't always make sense grammatically, so we should be smarter about it
     print(f"The {requested_cond} in {city.capitalize()}, {state.capitalize()} is {data}")
-    return None
+    return False
 
 
 def error(message):
-    if message.lower() == "exit":
-        return "exit"
-    else:
-        print(f"Error: {message}")
-        return None
+    print(f"Error: {message}")
+    return False
 
-i# This is the function used by the driver, and the only
+# This is the function used by the driver, and the only
 # public function of this module
-# TODO: Handle errors properly and request user input properly
-#       and also output things using text-to-speech
+# TODO: request user input properly and output things using text-to-speech
 def process_weather_request():
     while True:
         print("What weather information would you like?")
-        err = parse_request(input())
-        while err is not None:
-            if err == "exit":
-                return
-            # TODO: Actually handle errors
-            print(err)
-            err = parse_request(input())
-
+        if parse_request(input()):
+            return
