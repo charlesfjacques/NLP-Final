@@ -1,5 +1,11 @@
+from pyttsx3_voice import voice
 from bs4 import BeautifulSoup as soup
 import requests
+
+# for ease of development, comment this function out
+# to just print things normally instead.
+def print(string):
+    voice(string, 34)
 
 # Transfer Inputs
 states = {
@@ -199,7 +205,7 @@ def error(message):
 
 # This is the function used by the driver, and the only
 # public function of this module
-# TODO: request user input properly and output things using text-to-speech
+# TODO: request user input properly
 def process_weather_request():
     while True:
         print("What weather information would you like?")
