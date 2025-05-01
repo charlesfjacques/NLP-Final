@@ -124,16 +124,14 @@ import os
 
 
 def get_weather(city, state):
-    API_KEY = "cb89c37822875b5b47319c98f6cb1522"  # <- your actual key
+    API_KEY = os.getenv("WEATHER_API_KEY")  # Load API key from environment variable
+    if not API_KEY:
+        raise ValueError("API Key not found. Please set the WEATHER_API_KEY environment variable.")
     city = city_fix(city)
     state = state_abbrev(state)
     lat, lon = get_coords(city, state)
     return get_weather_coords(lat, lon, API_KEY)
 
-
-
-# For the terminal: 
-# export WEATHER_API_KEY="cb89c37822875b5b47319c98f6cb1522"
 
 
 # Maps conditions a user might request to the keys we use in the output from get_weather_coords
