@@ -2,7 +2,7 @@ from pyttsx3_voice import voice
 from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
-from current_events.current_events import process_current_event_request
+
 
 
 #
