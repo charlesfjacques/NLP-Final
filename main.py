@@ -11,10 +11,10 @@ from current_events.current_events import process_current_event_request
 def main():
     categories = ['WEATHER','SPORTS','MUSIC','CURRENT EVENTS','EXIT']
     user_category = ''
-    voice("Welcome to Alexa",34)
+    voice("Welcome to Alehxa",34)
     while user_category != 'EXIT' :
         voice('Please select one of the following categories for your question',34)
-        voice('\n''WEATHER\nSPORTS\nMUSIC\nCURRENT EVENTS\nEXIT\n',34)
+        voice('\n''WEATHER\nSPORTS\nMUSIC\nCURRENT EVENTS\nor EXIT\n',34)
         user_category = input('What is your choice : ').upper()
         #print(user_category)
 

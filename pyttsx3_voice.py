@@ -1,10 +1,13 @@
 import pyttsx3
 
-def voice(text,voice_id = 34):
-        engine = pyttsx3.init()
+engine = pyttsx3.init()
+VOICE = "com.apple.eloquence.en-US.Eddy"
+# the voice_id argument is ignored
+def voice(text, voice_id = 99):
         voices = engine.getProperty('voices')
-        engine.setProperty('voice', voices[voice_id].id)
-        
+        # print([v.id for v in voices])
+        engine.setProperty('voice', VOICE)
+        engine.setProperty('rate', 170)
         # default female id is 34
         # default male id is 19
 
