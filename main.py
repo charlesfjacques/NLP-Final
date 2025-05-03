@@ -2,11 +2,12 @@ from pyttsx3_voice import voice
 from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
-from speech_to_text.speech import listen
+from speech_to_text.listen import listen
 
 #
-#  This is the main driver program for the "Alexa" Project
+#  This is the main driver program for the "Alexa" Project 
 #
+
 def main():
     categories = ['WEATHER','SPORTS','MUSIC']
     user_category = ''
@@ -14,7 +15,7 @@ def main():
     while user_category != 'EXIT' :
         voice('Please select one of the following categories for your question',34)
         voice(" ".join(categories)+" or exit", 34)
-        user_category = listen.upper()
+        user_category = listen().upper()
         
         print(user_category)
         
@@ -23,7 +24,7 @@ def main():
 
         if user_category == "EXIT":
             exit(0)
-            
+
         if user_category in categories :
             if user_category == 'WEATHER' :
                 process_weather_request()
