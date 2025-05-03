@@ -3,7 +3,7 @@ from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
 from current_events.current_events import process_current_event_request
-
+from speech_to_text.speech import listen
 
 #
 #  This is the main driver program for the "Alexa" Project
@@ -15,8 +15,11 @@ def main():
     while user_category != 'EXIT' :
         voice('Please select one of the following categories for your question',34)
         voice('\n''WEATHER\nSPORTS\nMUSIC\nCURRENT EVENTS\nEXIT\n',34)
-        user_category = input('What is your choice : ').upper()
-        #print(user_category)
+        user_category = listen().upper()
+        
+        print(user_category)
+        if user_category == "WHETHER":
+            user_category = "WEATHER"
 
         if user_category in categories :
             if user_category == 'WEATHER' :

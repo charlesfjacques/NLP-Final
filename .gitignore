@@ -11,3 +11,4 @@ output.wav
 
 .DS_Store
 Thumbs.db
+speech_to_text/vosk_stt/current_model
