@@ -1,10 +1,10 @@
 import sounddevice as sd
 import queue
 import json
-from vosk import Model, KaldiRecognizer
+from vosk import Model, KaldiRecognizer, SetLogLevel
 
 #SETTINGS
-
+SetLogLevel(-1) # DISABLES LOGGING
 settings_sample_rate = 16000
 settings_block_size = 8000
 settings_model = "speech_to_text/vosk_stt/current_model"
@@ -12,6 +12,9 @@ settings_model = "speech_to_text/vosk_stt/current_model"
 model = Model(settings_model)
 rec = KaldiRecognizer(model, 16000)
 q = queue.Queue()
+
+def load():
+    return
 
 def check_microphone():
     devices = sd.query_devices()

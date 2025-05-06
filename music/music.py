@@ -1,7 +1,8 @@
 from pyttsx3_voice import voice
 from music.spotify_utils import authenticate, search_song, play_song
 from music.validification import check_title, check_artist, get_song_name_artist
-
+from speech_to_text.listen import listen
+import time
 def check_exit(string):
     if 'EXIT' in string.upper():
         voice('Returning to home', 34)
@@ -13,7 +14,7 @@ def process_music_request():
 
     while True:
         voice('What would you like to do?   Play a song or stop? use PLAY.. BY... and STOP...'   , 34)
-        user_query = input('Query? ').strip()
+        user_query = listen().strip()
 
         if check_exit(user_query):
             return
@@ -43,4 +44,7 @@ def process_music_request():
 
         voice(f'Playing {spotify_song_name} by {spotify_artists[0]}', 34)
         play_song(sp, track['uri'])
+        
+        time.sleep(10)
+
         
