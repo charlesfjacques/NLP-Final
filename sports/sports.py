@@ -5,6 +5,9 @@ import webbrowser
 import subprocess
 from sports.player import player
 
+def sport_api():
+     return 
+
 def check_exit(string):
      if 'EXIT' in string.upper():
         voice('Returning to home', 34)
@@ -50,9 +53,10 @@ def process_sports_request() :
                player(name)
 
           elif answer == 'SPORT':
-               voice('state the sport you would like to investigate',34)
-               sport_name = input('state sport: ').upper()
-               sport_spliter(sport_name)
+               # voice('state the sport you would like to investigate',34)
+               # sport_name = input('state sport: ').upper()
+               # sport_spliter(sport_name)
+               sport_api()
                
           else:
                voice('sorry could not process your request',34)
