@@ -2,41 +2,41 @@ from pyttsx3_voice import voice
 from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
-from speech_to_text.listen import listen, load
+from speech_to_text.listen import listen, load, check_for_word
+
+exit_key_words = ['STOP', 'EXIT', 'LEAVE']
+weather_key_words = ['WEATHER', 'WHETHER']
+music_key_words = ['MUSIC', 'SONG', 'LISTEN']
+sports_key_words = ['SPORTS', 'PLAYERS']
 
 #
 #  This is the main driver program for the "Alexa" Project 
 #
 
 def main():
+
     print("Initializing text to speech")
     load()
-    categories = ['WEATHER','SPORTS','MUSIC']
-    user_category = ''
+
     voice("Welcome to Alehxa",34)
-    while user_category != 'EXIT' :
-        voice('Please select one of the following categories for your question',34)
-        voice(" ".join(categories)+" or exit", 34)
-        user_category = listen().upper()
-        
-        print(user_category)
-        
-        if user_category == "WHETHER":
-            user_category = "WEATHER"
+    voice('Please select one of the following categories for your question',34)
+    voice("Weather, Music, Sports. Say exit to exit", 34)
 
-        if user_category == "EXIT":
-            exit(0)
+    user_query = listen()
+        
+    print(user_query)
+    
+    if check_for_word(user_query, exit_key_words):
+        return
+    
+    elif check_for_word(user_query, weather_key_words):
+        process_weather_request()
 
-        if user_category in categories :
-            if user_category == 'WEATHER' :
-                process_weather_request()
-                continue
-            elif user_category == 'SPORTS' :
-                process_sports_request()
-            elif user_category == 'MUSIC' :
-                process_music_request()
-                continue
-        else :
-            voice('Sorry, your response does not match any of the categories',34)
+    elif check_for_word(user_query, music_key_words):
+        process_music_request()
+
+    elif check_for_word(user_query, sports_key_words):
+        process_sports_request()
+    
 
 main()
