@@ -1,4 +1,4 @@
-from pyttsx3_voice import voice
+from pyttsx3_voice import voice, end_voice, interrupt_voice
 from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
@@ -16,6 +16,7 @@ def main():
         voice('Please select one of the following categories for your question',34)
         voice(" ".join(categories)+" or exit", 34)
         user_category = listen().upper()
+        interrupt_voice()
         
         print(user_category)
         
@@ -38,3 +39,4 @@ def main():
             voice('Sorry, your response does not match any of the categories',34)
 
 main()
+end_voice()
