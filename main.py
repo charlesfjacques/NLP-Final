@@ -1,4 +1,4 @@
-from pyttsx3_voice import voice
+from pyttsx3_voice import voice, end_voice, interrupt_voice
 from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
@@ -23,7 +23,7 @@ def main():
     voice("Weather, Music, Sports. Say exit to exit", 34)
 
     user_query = listen()
-        
+    interrupt_voice()    
     print(user_query)
     
     if check_for_word(user_query, exit_key_words):
@@ -40,3 +40,4 @@ def main():
     
 
 main()
+end_voice()
