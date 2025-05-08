@@ -2,13 +2,15 @@ from pyttsx3_voice import voice, end_voice, interrupt_voice
 from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
-from speech_to_text.listen import listen
+from speech_to_text.listen import listen, load
 
 #
 #  This is the main driver program for the "Alexa" Project 
 #
 
 def main():
+    print("Initializing text to speech")
+    load()
     categories = ['WEATHER','SPORTS','MUSIC']
     user_category = ''
     voice("Welcome to Alehxa",34)

@@ -3,8 +3,6 @@ __pycache__/
 *.so
 
 *.env
-music/.env
-
 .cache/
 
 output.wav

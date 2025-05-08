@@ -1,4 +1,11 @@
 use_speech_to_text = False # Switch to true if using speech to text
+
+def load():
+    if use_speech_to_text:
+        from speech_to_text.stt_listen import load as _load
+        _load()
+
+
 def listen():
     if use_speech_to_text:
         from speech_to_text.stt_listen import listen as _listen
