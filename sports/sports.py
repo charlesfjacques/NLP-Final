@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import math
 import datetime
 import http.client
+import string
 
 current_time = datetime.datetime.now()
 
@@ -29,6 +30,7 @@ def get_date():
         day = str(current_time.day)
     
     return f'{current_time.year}-{month}-{day}'
+
 
 def get_info_bsb(team, date=get_date()):
 
@@ -61,13 +63,13 @@ def get_info_bsb(team, date=get_date()):
             return f'The {home} played the {away}. The {home} scored {home_scr} runs, and the {away} scored {away_scr} runs.'
         elif data['response'][i]['status']['long'] == 'Not Started':
             return 'The game has not started yet.'
+        # if nothing else try yesterday to find team
         else:
             return 'Try a different team.'
 
 
 def get_info_bkb(team, date=get_date()):
     url = f'https://v1.basketball.api-sports.io/games?date={date}'
-    url2 = f'https://v1.basketball.api-sports.io/games?date=2025-05-05'
 
     payload={}
     headers = {
@@ -75,7 +77,7 @@ def get_info_bkb(team, date=get_date()):
     'x-rapidapi-host': 'v1.basketball.api-sports.io'
     }
 
-    response = requests.request("GET", url2, headers=headers, data=payload)
+    response = requests.request("GET", url, headers=headers, data=payload)
     data = response.json()
 
     i_list = []
@@ -95,9 +97,9 @@ def get_info_bkb(team, date=get_date()):
 
             return f'The {home} played the {away}. The {home} scored {home_scr} points, and the {away} scored {away_scr} points.'
         elif data['response'][i]['status']['long'] == 'Not Started':
-            return ('Game has not started yet')
+            return 'Game has not started yet'
         else:
-            return ('Try a different team')
+            return 'Try a different team'
 
 
 def get_info_scr(team, date=get_date()):
@@ -121,10 +123,9 @@ def get_info_scr(team, date=get_date()):
 
             return f'The {home} played the {away}. The {home} scored {home_scr} goals, and the {away} scored {away_scr} goals.'
         elif data['response'][i]['status']['long'] == 'Not Started':
-            return (('game', 'not'), ('started', 'yet'))
+            return 'Game has not started yet.'
         else:
-            return (('try','a'),('different','team'))
-
+            return 'Try a different team.'
 
 
 
@@ -137,20 +138,20 @@ def check_exit(string):
 def sport_spliter(sport_name):
 
      sports = ['BASKETBALL','SOCCER','BASEBALL','EXIT']
-     voice('Select a sport, state an athletes name, or say exit to return to home',34)
+     voice('Select a team, or say exit to return to home',34)
 
      if sport_name in sports:
           if sport_name == 'BASKETBALL':
                sport_team = input('which team: ').lower()
-               sport_team = sport_team.capitalize()
+               sport_team = string.capwords(sport_team)
                voice(get_info_bkb(sport_team))
           elif sport_name == 'SOCCER':
                sport_team = input('which team: ').lower()
-               sport_team = sport_team.capitalize()
-               voice(get_info_scr())
+               sport_team = string.capwords(sport_team)
+               voice(get_info_scr(sport_team))
           elif sport_name == 'BASEBALL':
                sport_team = input('which team: ').lower()
-               sport_team = sport_team.capitalize()
+               sport_team = string.capwords(sport_team)
                voice(get_info_bsb(sport_team))
           elif sport_name == 'EXIT':
                voice('Returning to home',34)
@@ -177,7 +178,7 @@ def process_sports_request() :
                player(name)
 
           elif answer == 'SPORT':
-               voice('state the sport you would like to investigate',34)
+               voice('state the sport you would like to investigate, basketball, baseball, or soccer',34)
                sport_name = input('state sport: ').upper()
                sport_spliter(sport_name)
                
