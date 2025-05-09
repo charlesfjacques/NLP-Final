@@ -1,4 +1,4 @@
-from pyttsx3_voice import voice
+from voice.pyttsx3_voice import voice
 from music.spotify_utils import authenticate, search_song, play_song
 from music.validification import check_title, check_artist, get_song_name_artist
 from speech_to_text.listen import listen

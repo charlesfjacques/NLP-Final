@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-from pyttsx3_voice import voice
+from voice.pyttsx3_voice import voice
 import webbrowser
 import subprocess
 

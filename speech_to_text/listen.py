@@ -1,4 +1,4 @@
-use_speech_to_text = False # Switch to true if using speech to text
+from config import use_speech_to_text
 
 def load():
     if use_speech_to_text:

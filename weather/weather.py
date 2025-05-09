@@ -1,4 +1,4 @@
-from pyttsx3_voice import voice
+from voice.pyttsx3_voice import voice
 from bs4 import BeautifulSoup as soup
 import requests
 
