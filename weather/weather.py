@@ -1,4 +1,5 @@
-from pyttsx3_voice import voice
+from pyttsx3_voice import voice, interrupt_voice
+from speech_to_text.listen import listen
 from bs4 import BeautifulSoup as soup
 import requests
 
@@ -6,6 +7,10 @@ import requests
 # to just print things normally instead.
 def print(string):
     voice(string, 34)
+def input():
+    answer = listen()
+    interrupt_voice()
+    return answer
 
 # Transfer Inputs
 states = {
@@ -205,7 +210,7 @@ def error(message):
 
 # This is just a helper function to format a list in a human-readable way
 def display_list(list):
-    return ", ".join(list[:-1])+" and "+list[-1]
+    return ", ".join(list[:-1])+", and "+list[-1]
 
 # This is the function used by the driver, and the only
 # public function of this module
