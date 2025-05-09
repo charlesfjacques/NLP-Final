@@ -1,6 +1,10 @@
 import threading
 import subprocess
 import time
+import os.path as path
+
+here = path.abspath(__file__)
+subprocess_path = path.join(path.dirname(here), "speak_subprocess.py")
 
 class TTSEngine(threading.Thread):
         def __init__(self):
@@ -14,7 +18,7 @@ class TTSEngine(threading.Thread):
                         if len(self.to_speak) > 0:
                                 phrases = self.to_speak
                                 self.to_speak = []
-                                self.process = subprocess.Popen(["python3", "speak_subprocess.py", *phrases])
+                                self.process = subprocess.Popen(["python3", subprocess_path, *phrases])
                                 self.process.wait()
                                 self.process = None
                         time.sleep(0.1)

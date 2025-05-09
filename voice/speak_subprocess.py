@@ -1,6 +1,6 @@
 import sys
 import pyttsx3
-from voice.TTSEngine import VOICE
+from TTSEngine import VOICE
 
 def init_engine():
     engine = pyttsx3.init()
