@@ -58,11 +58,73 @@ def get_info_bsb(team, date=get_date()):
             away = data['response'][i]['teams']['away']['name']
             away_scr = str(data['response'][i]['scores']['away']['total'])
 
-            return f'The {home} played the {away}. The {home} scored {home_scr} points, and the {away} scored {away_scr} points.'
+            return f'The {home} played the {away}. The {home} scored {home_scr} runs, and the {away} scored {away_scr} runs.'
         elif data['response'][i]['status']['long'] == 'Not Started':
             return 'The game has not started yet.'
         else:
             return 'Try a different team.'
+
+
+def get_info_bkb(team, date=get_date()):
+    url = f'https://v1.basketball.api-sports.io/games?date={date}'
+    url2 = f'https://v1.basketball.api-sports.io/games?date=2025-05-05'
+
+    payload={}
+    headers = {
+    'x-rapidapi-key': api_key,
+    'x-rapidapi-host': 'v1.basketball.api-sports.io'
+    }
+
+    response = requests.request("GET", url2, headers=headers, data=payload)
+    data = response.json()
+
+    i_list = []
+    for i in range(len(data['response'])):
+        if data['response'][i]['league']['name'] != 'NBA':
+            i_list.append(i)
+    i_list.reverse()
+    for i in range(len(i_list)):
+        del data['response'][i_list[i]]
+
+    for i in range(len(data['response'])):
+        if data['response'][i]['teams']['home']['name'] == team or data['response'][i]['teams']['away']['name'] == team and data['response'][i]['status']['long'] != 'Not Started':
+            home = data['response'][i]['teams']['home']['name']
+            home_scr = str(data['response'][i]['scores']['home']['total'])
+            away = data['response'][i]['teams']['away']['name']
+            away_scr = str(data['response'][i]['scores']['away']['total'])
+
+            return f'The {home} played the {away}. The {home} scored {home_scr} points, and the {away} scored {away_scr} points.'
+        elif data['response'][i]['status']['long'] == 'Not Started':
+            return ('Game has not started yet')
+        else:
+            return ('Try a different team')
+
+
+def get_info_scr(team, date=get_date()):
+    url = f'https://v3.football.api-sports.io/fixtures?date={date}'
+
+    payload={}
+    headers = {
+    'x-rapidapi-key': api_key,
+    'x-rapidapi-host': 'v3.football.api-sports.io'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    data = response.json()
+    
+    for i in range(len(data['response'])):
+        if data['response'][i]['teams']['home']['name'] == team or data['response'][i]['teams']['away']['name'] == team and data['response'][i]['status']['long'] != 'Not Started':
+            home = data['response'][i]['teams']['home']['name']
+            home_scr = str(data['response'][i]['scores']['home']['total'])
+            away = data['response'][i]['teams']['away']['name']
+            away_scr = str(data['response'][i]['scores']['away']['total'])
+
+            return f'The {home} played the {away}. The {home} scored {home_scr} goals, and the {away} scored {away_scr} goals.'
+        elif data['response'][i]['status']['long'] == 'Not Started':
+            return (('game', 'not'), ('started', 'yet'))
+        else:
+            return (('try','a'),('different','team'))
+
 
 
 
@@ -81,11 +143,15 @@ def sport_spliter(sport_name):
           if sport_name == 'BASKETBALL':
                sport_team = input('which team: ').lower()
                sport_team = sport_team.capitalize()
-               voice(get_info_bsb(sport_team))
+               voice(get_info_bkb(sport_team))
           elif sport_name == 'SOCCER':
-               print('soccer')
+               sport_team = input('which team: ').lower()
+               sport_team = sport_team.capitalize()
+               voice(get_info_scr())
           elif sport_name == 'BASEBALL':
-               print('baseball')
+               sport_team = input('which team: ').lower()
+               sport_team = sport_team.capitalize()
+               voice(get_info_bsb(sport_team))
           elif sport_name == 'EXIT':
                voice('Returning to home',34)
      else:
@@ -118,91 +184,3 @@ def process_sports_request() :
           else:
                voice('sorry could not process your request',34)
                exit
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def get_info_bkb(team, date=get_date()):
-    url = f'https://v1.basketball.api-sports.io/games?date={date}'
-    url2 = f'https://v1.basketball.api-sports.io/games?date=2025-05-05'
-
-    payload={}
-    headers = {
-    'x-rapidapi-key': api_key,
-    'x-rapidapi-host': 'v1.basketball.api-sports.io'
-    }
-
-    response = requests.request("GET", url2, headers=headers, data=payload)
-    data = response.json()
-
-    i_list = []
-    for i in range(len(data['response'])):
-        if data['response'][i]['league']['name'] != 'NBA':
-            i_list.append(i)
-    i_list.reverse()
-    for i in range(len(i_list)):
-        del data['response'][i_list[i]]
-
-    for i in range(len(data['response'])):
-        if data['response'][i]['teams']['home']['name'] == team or data['response'][i]['teams']['away']['name'] == team and data['response'][i]['status']['long'] != 'Not Started':
-            return (data['response'][i]['teams']['home']['name'], str(data['response'][i]['scores']['home']['total'])), (data['response'][i]['teams']['away']['name'], str(data['response'][i]['scores']['away']['total']))
-        elif data['response'][i]['status']['long'] == 'Not Started':
-            return ('Game has not started yet')
-        else:
-            return ('Try a different team')
-
-print(get_info_bkb('Indiana Pacers'))
-
-
-
-
-def get_info_scr(team, date=get_date()):
-    url = f'https://v3.football.api-sports.io/fixtures?date={date}'
-
-    payload={}
-    headers = {
-    'x-rapidapi-key': api_key,
-    'x-rapidapi-host': 'v3.football.api-sports.io'
-    }
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-    data = response.json()
-    
-    for i in range(len(data['response'])):
-        if data['response'][i]['teams']['home']['name'] == team or data['response'][i]['teams']['away']['name'] == team and data['response'][i]['status']['long'] != 'Not Started':
-            return (data['response'][i]['teams']['home']['name'], str(data['response'][i]['scores']['home']['total'])), (data['response'][i]['teams']['away']['name'], str(data['response'][i]['scores']['away']['total']))
-        elif data['response'][i]['status']['long'] == 'Not Started':
-            return (('game', 'not'), ('started', 'yet'))
-        else:
-            return (('try','a'),('different','team'))
-
-# print(get_info_scr(get_date()))
-
-
