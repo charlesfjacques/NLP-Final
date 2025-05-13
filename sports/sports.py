@@ -31,10 +31,25 @@ def get_date():
     
     return f'{current_time.year}-{month}-{day}'
 
+def get_yest():
+    day = 0
+    month = 0
+    if len(str(current_time.month)) < 2:
+        month = '0' + str(current_time.month)
+    else:
+        month = str(current_time.month)
+    if len(str(current_time.day - 1)) < 2:
+        day = '0' + str(current_time.day - 1)
+    else:
+        day = str(current_time.day - 1)
+    
+    return f'{current_time.year}-{month}-{day}'
 
-def get_info_bsb(team, date=get_date()):
+
+def get_info_bsb(team, date=get_date(), yest=get_yest()):
 
     url = f'https://v1.baseball.api-sports.io/games?date={date}'
+    url_yest = f'https://v1.baseball.api-sports.io/games?date={yest}'
 
     payload={}
     headers = {
@@ -43,15 +58,27 @@ def get_info_bsb(team, date=get_date()):
     }
 
     response = requests.request("GET", url, headers=headers, data=payload)
+    response_yest = requests.request("GET", url_yest, headers=headers, data=payload)
 
     data = response.json()
     i_list = []
+    data_yest = response_yest.json()
+    i_list_yest = []
     for i in range(len(data['response'])):
         if data['response'][i]['league']['name'] != 'MLB':
             i_list.append(i)
     i_list.reverse()
     for i in range(len(i_list)):
         del data['response'][i_list[i]]
+
+
+    for i in range(len(data_yest['response'])):
+        if data_yest['response'][i]['league']['name'] != 'MLB':
+            i_list_yest.append(i)
+    i_list_yest.reverse()
+    for i in range(len(i_list_yest)):
+        del data_yest['response'][i_list_yest[i]]
+
 
     for i in range(len(data['response'])):
         if data['response'][i]['teams']['home']['name'] == team or data['response'][i]['teams']['away']['name'] == team and data['response'][i]['status']['long'] != 'Not Started':
@@ -63,7 +90,15 @@ def get_info_bsb(team, date=get_date()):
             return f'The {home} played the {away}. The {home} scored {home_scr} runs, and the {away} scored {away_scr} runs.'
         elif data['response'][i]['status']['long'] == 'Not Started':
             return 'The game has not started yet.'
-        # if nothing else try yesterday to find team
+        elif data_yest['response'][i]['teams']['home']['name'] == team or data_yest['response'][i]['teams']['away']['name'] == team and data_yest['response'][i]['status']['long'] != 'Not Started':
+            home = data_yest['response'][i]['teams']['home']['name']
+            home_scr = str(data_yest['response'][i]['scores']['home']['total'])
+            away = data_yest['response'][i]['teams']['away']['name']
+            away_scr = str(data_yest['response'][i]['scores']['away']['total'])
+
+            return f'The {home} played the {away}. The {home} scored {home_scr} runs, and the {away} scored {away_scr} runs.'
+        elif data_yest['response'][i]['status']['long'] == 'Not Started':
+            return 'The game has not started yet.'
         else:
             return 'Try a different team.'
 
