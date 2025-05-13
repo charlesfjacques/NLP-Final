@@ -3,7 +3,7 @@ import pyttsx3
 engine = pyttsx3.init()
 VOICE = "com.apple.eloquence.en-US.Eddy"
 # the voice_id argument is ignored
-def voice(text, voice_id = 99):
+def old_voice(text, voice_id = 99):
         voices = engine.getProperty('voices')
         # print([v.id for v in voices])
         engine.setProperty('voice', VOICE)
@@ -17,4 +17,3 @@ def voice(text, voice_id = 99):
         engine.save_to_file(text, 'output.wav')
         engine.runAndWait()
         return
-

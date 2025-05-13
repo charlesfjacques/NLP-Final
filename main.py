@@ -1,40 +1,52 @@
-from pyttsx3_voice import voice
+from voice.pyttsx3_voice import voice, end_voice, interrupt_voice
 from sports.sports import process_sports_request
 from weather.weather import process_weather_request
 from music.music import process_music_request
-from speech_to_text.listen import listen
+from speech_to_text.listen import listen, load, check_for_word
+from config import exit_key_words, music_key_words, weather_key_words, sports_key_words, use_speech_to_text
 
 #
 #  This is the main driver program for the "Alexa" Project 
 #
 
 def main():
-    categories = ['WEATHER','SPORTS','MUSIC']
-    user_category = ''
+
+    print("Initializing text to speech")
+
+    load()
+
     voice("Welcome to Alehxa",34)
-    while user_category != 'EXIT' :
+
+    keep_listening = True
+
+    while keep_listening:
+
+        keep_listening = False
+
         voice('Please select one of the following categories for your question',34)
-        voice(" ".join(categories)+" or exit", 34)
-        user_category = listen().upper()
-        
-        print(user_category)
-        
-        if user_category == "WHETHER":
-            user_category = "WEATHER"
+        voice("Weather, Music, Sports. Say exit to exit", 34)
 
-        if user_category == "EXIT":
-            exit(0)
+        user_query = listen()
 
-        if user_category in categories :
-            if user_category == 'WEATHER' :
-                process_weather_request()
-                continue
-            elif user_category == 'SPORTS' :
-                process_sports_request()
-            elif user_category == 'MUSIC' :
-                process_music_request()
-                continue
-        else :
-            voice('Sorry, your response does not match any of the categories',34)
+        interrupt_voice()  
+
+        print(user_query)
+        
+        if check_for_word(user_query, exit_key_words):
+            return
+        
+        elif check_for_word(user_query, weather_key_words):
+            process_weather_request()
+
+        elif check_for_word(user_query, music_key_words):
+            process_music_request()
+
+        elif check_for_word(user_query, sports_key_words):
+            process_sports_request()
+
+        else:
+            keep_listening = True
+
 
 main()
+end_voice()

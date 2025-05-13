@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import pyttsx3
-from pyttsx3_voice import voice
+from voice.pyttsx3_voice import voice
 import webbrowser
 import subprocess
 from sports.player import player
@@ -203,6 +202,9 @@ def get_info_scr(team, date=get_date(), yest=get_yest()):
                     'Try a different team'
             
 
+
+def sport_api():
+     return 
 
 def check_exit(string):
      if 'EXIT' in string.upper():

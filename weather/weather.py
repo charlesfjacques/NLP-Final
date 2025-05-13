@@ -1,4 +1,5 @@
-from pyttsx3_voice import voice
+from voice.pyttsx3_voice import voice, interrupt_voice
+from speech_to_text.listen import listen
 from bs4 import BeautifulSoup as soup
 import requests
 
@@ -6,6 +7,10 @@ import requests
 # to just print things normally instead.
 def print(string):
     voice(string, 34)
+def input():
+    answer = listen()
+    interrupt_voice()
+    return answer
 
 # Transfer Inputs
 states = {
@@ -203,11 +208,17 @@ def error(message):
     print(f"Error: {message}")
     return False
 
+# This is just a helper function to format a list in a human-readable way
+def display_list(list):
+    return ", ".join(list[:-1])+", and "+list[-1]
+
 # This is the function used by the driver, and the only
 # public function of this module
-# TODO: request user input properly
 def process_weather_request():
     while True:
         print("What weather information would you like?")
+        print("Include a city and state and a weather condition you want to know about.")
+        print(f"I can answer questions about {display_list([word for word in ALL_CONDITIONS])}.")
+        print("Say exit to leave the weather module.")
         if parse_request(input()):
             return

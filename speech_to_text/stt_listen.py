@@ -1,4 +1,5 @@
-from speech_to_text.vosk_stt.vosk_stt import vosk_listen
-
+import speech_to_text.vosk_stt.vosk_stt as vsk
 def listen():
-    return vosk_listen()
+    return vsk.vosk_listen()
+def load():
+    vsk.load()
