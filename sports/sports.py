@@ -90,17 +90,20 @@ def get_info_bsb(team, date=get_date(), yest=get_yest()):
             return f'The {home} played the {away}. The {home} scored {home_scr} runs, and the {away} scored {away_scr} runs.'
         elif data['response'][i]['status']['long'] == 'Not Started':
             return 'The game has not started yet.'
-        elif data_yest['response'][i]['teams']['home']['name'] == team or data_yest['response'][i]['teams']['away']['name'] == team and data_yest['response'][i]['status']['long'] != 'Not Started':
-            home = data_yest['response'][i]['teams']['home']['name']
-            home_scr = str(data_yest['response'][i]['scores']['home']['total'])
-            away = data_yest['response'][i]['teams']['away']['name']
-            away_scr = str(data_yest['response'][i]['scores']['away']['total'])
-
-            return f'The {home} played the {away}. The {home} scored {home_scr} runs, and the {away} scored {away_scr} runs.'
-        elif data_yest['response'][i]['status']['long'] == 'Not Started':
-            return 'The game has not started yet.'
         else:
-            return 'Try a different team.'
+            for i in range(len(data_yest['response'])):
+                if data_yest['response'][i]['teams']['home']['name'] == team or data_yest['response'][i]['teams']['away']['name'] == team and data_yest['response'][i]['status']['long'] != 'Not Started':
+                    home = data_yest['response'][i]['teams']['home']['name']
+                    home_scr = str(data_yest['response'][i]['scores']['home']['total'])
+                    away = data_yest['response'][i]['teams']['away']['name']
+                    away_scr = str(data_yest['response'][i]['scores']['away']['total'])
+
+                    return f'The {home} played the {away}. The {home} scored {home_scr} runs, and the {away} scored {away_scr} runs.'
+                elif data_yest['response'][i]['status']['long'] == 'Not Started':
+                    return 'The game has not started yet.'
+                else:
+                    'Try a different team'
+        
 
 
 def get_info_bkb(team, date=get_date()):
