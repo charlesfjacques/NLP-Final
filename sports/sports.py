@@ -4,9 +4,6 @@ from voice.pyttsx3_voice import voice
 import webbrowser
 import subprocess
 from sports.player import player
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import math
 import datetime
 import http.client
@@ -215,7 +212,7 @@ def check_exit(string):
 def sport_spliter(sport_name):
 
      sports = ['BASKETBALL','SOCCER','BASEBALL','EXIT']
-     voice('Select a team, or say exit to return to home',34)
+     voice('State the full team name, or say exit to return to home',34)
 
      if sport_name in sports:
           if sport_name == 'BASKETBALL':
