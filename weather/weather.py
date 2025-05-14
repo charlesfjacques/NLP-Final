@@ -5,8 +5,8 @@ import requests
 
 # for ease of development, comment this function out
 # to just print things normally instead.
-def print(string):
-    voice(string, 34)
+# def print(string):
+#     voice(string, 34)
 def input():
     answer = listen()
     interrupt_voice()
@@ -171,13 +171,16 @@ def parse_request(request):
 
     state = None
     state_tok = -1
+    rev_tokens = list(tokens)
+    rev_tokens.reverse()
     for state_abbrv, state_full in states.items():
-        idx = find_in_list(state_abbrv.lower(), tokens)
+        idx = find_in_list(state_abbrv.lower(), rev_tokens)
         if idx is None:
-            idx = find_in_list(state_full.lower(), tokens)
+            idx = find_in_list(state_full.lower(), rev_tokens)
         if idx is not None:
             state = state_abbrv
-            state_tok = idx
+            state_tok = len(tokens)-idx-1
+            break
     if state is None:
         return error("Please specify a state")
     if state_tok == 0:
