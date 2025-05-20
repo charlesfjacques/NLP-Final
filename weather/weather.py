@@ -5,8 +5,8 @@ import requests
 
 # for ease of development, comment this function out
 # to just print things normally instead.
-# def print(string):
-#     voice(string, 34)
+def print(string):
+    voice(string, 34)
 def input():
     answer = listen()
     interrupt_voice()

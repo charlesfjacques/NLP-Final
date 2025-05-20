@@ -28,8 +28,6 @@ def main():
 
         user_query = listen()
 
-        interrupt_voice()  
-
         print(user_query)
         
         if check_for_word(user_query, exit_key_words):
