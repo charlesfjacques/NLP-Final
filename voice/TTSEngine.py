@@ -30,7 +30,7 @@ class TTSEngine(threading.Thread):
                 if now-self.last_spoke >= INTERRUPT_AFTER:
                         self.interrupt()
                 self.last_spoke = now
-                self.to_speak.append(text)
+                self.to_speak.append(str(text))
 
         def interrupt(self):
                 self.to_speak = []
